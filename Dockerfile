@@ -1,13 +1,14 @@
 FROM node:16.14
-RUN apt update
-RUN apt install lsof
+RUN apt update && apt install lsof
+RUN mkdir /app && chown node:node /app
 WORKDIR /app
-COPY package*.json ./
+USER node
+COPY --chown=node:node package*.json ./
 RUN npm install
-COPY __tests__ __tests__
-COPY .trybe .trybe
-COPY src src
-COPY .eslintignore .
-COPY .eslintrc.json .
-COPY .sequelizerc .
-COPY jest.config.js .
+COPY --chown=node:node __tests__ __tests__
+COPY --chown=node:node .trybe .trybe
+COPY --chown=node:node src src
+COPY --chown=node:node .eslintignore .
+COPY --chown=node:node .eslintrc.json .
+COPY --chown=node:node .sequelizerc .
+COPY --chown=node:node jest.config.js .
