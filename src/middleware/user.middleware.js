@@ -1,20 +1,23 @@
-const CustomError = require("../utils/customError");
-const createUserSchema = require("./createUserSchema")
+const CustomError = require('../utils/customError');
+const createUserSchema = require('./createUserSchema');
+
+const checkType = (type, message, next) => {
+  try {
+    if (type === 'string.min') throw new CustomError(400, message);
+    if (type === 'string.email') throw new CustomError(400, message);
+  } catch (e) {
+    next(e);
+  }
+};
 
 const userMiddleware = (req, res, next) => {
-  try {
-    const userData = req.body;
-    const { error } = createUserSchema.validate(userData);
-    if (error) {
-      const message = error.details[0].message;
-      const type = error.details[0].type;
-      if (type === "string.min") throw new CustomError(400, message);
-      if (type === "string.email") throw new CustomError(400, message);
-    }
+  const userData = req.body;
+  const { error } = createUserSchema.validate(userData);
+  if (error) {
+    const { message, type } = error.details[0];
+    checkType(type, message, next);
     next();
-  } catch (e) {
-    next(e)
   }
-}
+};
 
 module.exports = userMiddleware;

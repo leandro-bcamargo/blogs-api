@@ -10,8 +10,8 @@ const create = async (req, res, next) => {
   } catch (e) {
     next(e);
   }
-}
+};
 
 module.exports = {
   create,
-}
+};

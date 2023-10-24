@@ -4,7 +4,7 @@ const generateJWT = (data) => {
   const jwtConfig = {
     algorithm: 'HS256',
     expiresIn: '7d',
-  }
+  };
 
   const secret = process.env.JWT_SECRET;
 
@@ -13,6 +13,6 @@ const generateJWT = (data) => {
   const token = jwt.sign(payload, secret, jwtConfig);
 
   return token;
-}
+};
 
 module.exports = generateJWT;

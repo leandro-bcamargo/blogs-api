@@ -1,5 +1,5 @@
-const CustomError = require("../utils/customError");
-const loginSchema = require("./loginSchema");
+const CustomError = require('../utils/customError');
+const loginSchema = require('./loginSchema');
 
 const loginMiddleware = (req, res, next) => {
   try {
@@ -7,14 +7,13 @@ const loginMiddleware = (req, res, next) => {
     const { error } = loginSchema.validate(loginData);
     // console.log('loginMiddleware error', error);
     if (error) {
-      const message = error.details[0].message;
-      const type = error.details[0].type;
+      const { message, type } = error.details[0];
       if (type === 'any.required') throw new CustomError(400, message);
     }
     next();
   } catch (error) {
     next(error);
   }
-}
+};
 
 module.exports = loginMiddleware;
