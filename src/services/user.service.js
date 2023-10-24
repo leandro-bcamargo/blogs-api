@@ -2,10 +2,12 @@ const { User } = require('../models');
 const CustomError = require('../utils/customError');
 
 const create = async (userData) => {
-  const user = await User.create({ ...userData });
-  console.log('userService create', user);
+  const isEmailUsed = await getByEmail(userData.email);
+  if (isEmailUsed) throw new CustomError(409, "User already registered");
 
-  return { status: 201, data: user };
+  await User.create({ ...userData });
+
+  return { status: 201 };
 }
 
 const getById = async (id) => {
@@ -14,10 +16,19 @@ const getById = async (id) => {
 
   if (!user) throw new CustomError(404, "User not found");
 
-  return { status: 200, data: user };
+  return { status: 200, data: user.dataValues };
+}
+
+const getByEmail = async (email) => {
+  const user = await User.findOne({ where: { email } });
+
+  if (!user) return null;
+
+  return user.dataValues;
 }
 
 module.exports = {
   create,
   getById,
+  getByEmail,
 }

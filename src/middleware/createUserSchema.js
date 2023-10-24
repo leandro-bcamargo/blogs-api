@@ -4,7 +4,7 @@ const createUserSchema = Joi.object({
   displayName: Joi.string().required().min(8).messages({
     'string.min': "\"displayName\" length must be at least 8 characters long",
   }),
-  email: Joi.string().email().required().messages({
+  email: Joi.string().email().required().empty('').messages({
     'string.email': "\"email\" must be a valid email",
   }),
   password: Joi.string().alphanum().min(6).messages({
