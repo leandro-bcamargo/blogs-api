@@ -23,23 +23,23 @@ const create = async (userData) => {
 
 const getAll = async () => {
   const users = await User.findAll({
-    attributes: { exclude: ['password'] }
+    attributes: { exclude: ['password'] },
   });
 
   // console.log('userService users:', users);
 
   return { status: 200, data: users };
-}
+};
 
 const getById = async (id) => {
   const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
 
   // console.log('userService getbyId:', user);
 
-  if (!user) throw new CustomError(404, "User does not exist");
+  if (!user) throw new CustomError(404, 'User does not exist');
 
   return { status: 200, data: user };
-}
+};
 
 module.exports = {
   create,

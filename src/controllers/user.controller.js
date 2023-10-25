@@ -19,7 +19,7 @@ const getAll = async (req, res, next) => {
   } catch (e) {
     next(e);
   }
-}
+};
 
 const getById = async (req, res, next) => {
   try {
@@ -30,7 +30,7 @@ const getById = async (req, res, next) => {
   } catch (e) {
     next(e);
   }
-}
+};
 
 module.exports = {
   create,
