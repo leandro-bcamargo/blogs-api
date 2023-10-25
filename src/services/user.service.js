@@ -21,15 +21,6 @@ const create = async (userData) => {
   return { status: 201, data: token };
 };
 
-const getById = async (id) => {
-  const user = await User.findOne({ where: { id } });
-  console.log('userService getById', user);
-
-  if (!user) throw new CustomError(404, 'User not found');
-
-  return { status: 200, data: user };
-};
-
 const getAll = async () => {
   const users = await User.findAll({
     attributes: { exclude: ['password'] }
@@ -38,6 +29,16 @@ const getAll = async () => {
   // console.log('userService users:', users);
 
   return { status: 200, data: users };
+}
+
+const getById = async (id) => {
+  const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
+
+  // console.log('userService getbyId:', user);
+
+  if (!user) throw new CustomError(404, "User does not exist");
+
+  return { status: 200, data: user };
 }
 
 module.exports = {

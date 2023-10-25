@@ -17,11 +17,23 @@ const getAll = async (req, res, next) => {
 
     return res.status(status).json(data);
   } catch (e) {
+    next(e);
+  }
+}
 
+const getById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { status, data } = await userService.getById(Number(id));
+
+    return res.status(status).json(data);
+  } catch (e) {
+    next(e);
   }
 }
 
 module.exports = {
   create,
   getAll,
+  getById,
 };
