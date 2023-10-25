@@ -1,3 +1,4 @@
+const generateJWT = require('../auth/generateJWT');
 const { User } = require('../models');
 const CustomError = require('../utils/customError');
 
@@ -13,9 +14,11 @@ const create = async (userData) => {
   const isEmailUsed = await getByEmail(userData.email);
   if (isEmailUsed) throw new CustomError(409, 'User already registered');
 
-  await User.create({ ...userData });
+  await User.create(userData);
 
-  return { status: 201 };
+  const token = generateJWT(userData);
+
+  return { status: 201, data: token };
 };
 
 const getById = async (id) => {

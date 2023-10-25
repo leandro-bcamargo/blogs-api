@@ -1,20 +1,22 @@
 const jwt = require('jsonwebtoken');
 const CustomError = require('../utils/customError');
-const { userService } = require('../services');
 
 const validateJWT = async (req, res, next) => {
   try {
     const secret = process.env.JWT_SECRET;
-    const token = req.header('authorization');
-    console.log('validateJWT token', token);
+    const { authorization: token } = req.headers;
+    // console.log('validateJWT token', req.headers);
     if (!token) throw new CustomError(401, 'Token not found');
-    const decoded = jwt.verify(token, secret);
-    const { id } = decoded.payload.dataValues;
+    let decoded;
+    try {
+      decoded = jwt.verify(token, secret);
+    } catch (e) {
+      throw new CustomError(401, 'Expired or invalid token');
+    }
+    req.user = decoded.payload.dataValues;
     // console.log('validateJWT id', id);
-    const { data } = await userService.getById(id);
-    console.log('validatejwt data', data);
-    if (!data) throw new CustomError(401, 'Expired or invalid token');
-
+    // const { data } = await userService.getById(id);
+    // console.log('validatejwt data', data);
     next();
   } catch (e) {
     next(e);

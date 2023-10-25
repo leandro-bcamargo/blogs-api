@@ -6,7 +6,7 @@ const login = async (loginData) => {
   const { email, password } = loginData;
   const user = await User.findOne({ where: { email, password } });
   if (!user) throw new CustomError(400, 'Invalid fields');
-  console.log('loginService user:', user);
+  // console.log('loginService user:', user);
 
   return user;
 };
