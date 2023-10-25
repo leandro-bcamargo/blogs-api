@@ -7,7 +7,7 @@ const getByEmail = async (email) => {
 
   if (!user) return null;
 
-  return user.dataValues;
+  return user;
 };
 
 const create = async (userData) => {
@@ -27,11 +27,22 @@ const getById = async (id) => {
 
   if (!user) throw new CustomError(404, 'User not found');
 
-  return { status: 200, data: user.dataValues };
+  return { status: 200, data: user };
 };
+
+const getAll = async () => {
+  const users = await User.findAll({
+    attributes: { exclude: ['password'] }
+  });
+
+  // console.log('userService users:', users);
+
+  return { status: 200, data: users };
+}
 
 module.exports = {
   create,
   getById,
   getByEmail,
+  getAll,
 };
