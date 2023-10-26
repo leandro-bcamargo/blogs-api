@@ -15,15 +15,14 @@ module.exports = (sequelize, datatypes) => {
     },
     published: {
       type: datatypes.DATE,
-      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     },
     userId: {
       type: datatypes.INTEGER,
-      allowNull: false,
     },
     updated: {
       type: datatypes.DATE,
-      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     },
   }, {
     underscored: true,
