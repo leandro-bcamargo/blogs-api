@@ -13,6 +13,19 @@ const create = async (req, res, next) => {
   }
 };
 
+const getAll = async (req, res, next) => {
+  try {
+    const { status, data } = await postService.getAll();
+
+    console.log('postController getAll', data);
+
+    return res.status(status).json(data);
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   create,
+  getAll,
 };
