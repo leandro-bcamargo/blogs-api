@@ -1,4 +1,5 @@
 const { BlogPost, User, Category } = require('../models');
+const CustomError = require('../utils/customError');
 const doCategoriesExist = require('../validations/doCategoriesExist');
 
 const create = async (postData, next, userId) => {
@@ -25,7 +26,26 @@ const getAll = async () => {
   return { status: 200, data: posts };
 };
 
+const getById = async (id) => {
+  const post = await BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: User,
+      as: 'user', 
+      attributes: { exclude: ['password'] } },
+      { model: Category, 
+      as: 'categories', 
+      through: { attributes: [] } }
+    ]
+  });
+
+  if (!post) throw new CustomError(404, 'Post does not exist');
+
+  return { status: 200, data: post };
+};
+
 module.exports = {
   create,
   getAll,
+  getById
 };
