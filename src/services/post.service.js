@@ -1,6 +1,6 @@
 const { BlogPost, User, Category } = require('../models');
 const CustomError = require('../utils/customError');
-const canUpdatePost = require('../validations/canUpdatePost');
+const canModifyPost = require('../validations/canModifyPost');
 const doCategoriesExist = require('../validations/doCategoriesExist');
 
 const create = async (postData, next, userId) => {
@@ -60,9 +60,18 @@ const update = async (postId, reqId, postData) => {
   return { status: 200, data: post };
 }
 
+const remove = async (postId, reqId) => {
+  await canModifyPost(postId, reqId);
+
+  await BlogPost.destroy({where: {id: postId}});
+
+  return { status: 204 }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  remove,
 };
