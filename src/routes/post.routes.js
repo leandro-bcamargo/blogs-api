@@ -1,6 +1,6 @@
 const express = require('express');
 const validateJWT = require('../auth/validateJWT');
-const {createPostMiddleware, updatePostMiddleware} = require('../middlewares')
+const { createPostMiddleware, updatePostMiddleware } = require('../middlewares');
 const { postController } = require('../controllers');
 
 const router = express.Router();

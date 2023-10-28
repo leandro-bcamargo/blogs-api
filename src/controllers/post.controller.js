@@ -45,7 +45,6 @@ const update = async (req, res, next) => {
     const { status, data } = await postService.update(postId, reqId, postData);
 
     return res.status(status).json(data);
-
   } catch (e) {
     next(e);
   }

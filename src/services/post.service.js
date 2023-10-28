@@ -36,8 +36,8 @@ const getById = async (id) => {
       attributes: { exclude: ['password'] } },
       { model: Category, 
       as: 'categories', 
-      through: { attributes: [] } }
-    ]
+      through: { attributes: [] } },
+    ],
   });
 
   if (!post) throw new CustomError(404, 'Post does not exist');
@@ -46,26 +46,31 @@ const getById = async (id) => {
 };
 
 const update = async (postId, reqId, postData) => {
-  const {title, content} = postData;
+  const { title, content } = postData;
   
-  await canUpdatePost(postId, reqId);
+  await canModifyPost(postId, reqId);
 
-  await BlogPost.update({title, content}, {where: {id: postId}});
+  await BlogPost.update({ title, content }, { where: { id: postId } });
 
-  const post = await BlogPost.findOne({ where: { id: postId }, include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } }, { model: Category, as: 'categories', through: { attributes: [] } }]
+  const post = await BlogPost.findOne({ where: 
+    { id: postId }, 
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } }, 
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
   });
 
   // console.log('postService update:', post);
 
   return { status: 200, data: post };
-}
+};
 
 const remove = async (postId, reqId) => {
   await canModifyPost(postId, reqId);
 
-  await BlogPost.destroy({where: {id: postId}});
+  await BlogPost.destroy({ where: { id: postId } });
 
-  return { status: 204 }
+  return { status: 204 };
 };
 
 module.exports = {

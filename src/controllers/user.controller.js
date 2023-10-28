@@ -32,8 +32,20 @@ const getById = async (req, res, next) => {
   }
 };
 
+const removeLoggedUser = async (req, res, next) => {
+  try {
+    const { id: reqId } = req.user;
+    const { status } = await userService.removeLoggedUser(reqId);
+
+    return res.status(status).end();
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  removeLoggedUser,
 };

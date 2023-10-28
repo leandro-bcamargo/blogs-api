@@ -1,5 +1,5 @@
 const CustomError = require('../utils/customError');
-const {loginSchema} = require('./schemas/');
+const { loginSchema } = require('./schemas');
 
 const loginMiddleware = (req, res, next) => {
   try {

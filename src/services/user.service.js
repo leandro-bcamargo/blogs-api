@@ -41,9 +41,16 @@ const getById = async (id) => {
   return { status: 200, data: user };
 };
 
+const removeLoggedUser = async (reqId) => {
+  await User.destroy({ where: { id: reqId } });
+
+  return { status: 204 };
+};
+
 module.exports = {
   create,
   getById,
   getByEmail,
   getAll,
+  removeLoggedUser,
 };
