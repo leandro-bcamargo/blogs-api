@@ -36,8 +36,24 @@ const getById = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  try {
+    const {id: postId} = req.params;
+    const postData = req.body;
+    const {id: reqId} = req.user;
+    console.log('postController update', reqId);
+    const {status, data} = await postService.update(postId, reqId, postData);
+
+    return res.status(status).json(data);
+
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

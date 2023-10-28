@@ -1,5 +1,6 @@
 const { BlogPost, User, Category } = require('../models');
 const CustomError = require('../utils/customError');
+const canUpdatePost = require('../validations/canUpdatePost');
 const doCategoriesExist = require('../validations/doCategoriesExist');
 
 const create = async (postData, next, userId) => {
@@ -44,8 +45,24 @@ const getById = async (id) => {
   return { status: 200, data: post };
 };
 
+const update = async (postId, reqId, postData) => {
+  const {title, content} = postData;
+  
+  await canUpdatePost(postId, reqId);
+
+  await BlogPost.update({title, content}, {where: {id: postId}});
+
+  const post = await BlogPost.findOne({ where: { id: postId }, include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } }, { model: Category, as: 'categories', through: { attributes: [] } }]
+  });
+
+  // console.log('postService update:', post);
+
+  return { status: 200, data: post };
+}
+
 module.exports = {
   create,
   getAll,
-  getById
+  getById,
+  update,
 };

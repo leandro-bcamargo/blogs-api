@@ -1,12 +1,13 @@
 const express = require('express');
 const validateJWT = require('../auth/validateJWT');
-const postMiddleware = require('../middlewares/post.middleware');
+const {createPostMiddleware, updatePostMiddleware} = require('../middlewares')
 const { postController } = require('../controllers');
 
 const router = express.Router();
 
-router.post('/', validateJWT, postMiddleware, postController.create);
+router.post('/', validateJWT, createPostMiddleware, postController.create);
 router.get('/:id', validateJWT, postController.getById);
 router.get('/', validateJWT, postController.getAll);
+router.put('/:id', validateJWT, updatePostMiddleware, postController.update);
 
 module.exports = router;

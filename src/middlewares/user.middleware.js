@@ -1,5 +1,5 @@
 const CustomError = require('../utils/customError');
-const createUserSchema = require('./createUserSchema');
+const {createUserSchema} = require('./schemas');
 
 const checkType = (type, message, next) => {
   try {

@@ -1,5 +1,5 @@
 const CustomError = require('../utils/customError');
-const createCategorySchema = require('./createCategorySchema');
+const {createCategorySchema} = require('./schemas');
 
 const categoryMiddleware = (req, res, next) => {
   try {
