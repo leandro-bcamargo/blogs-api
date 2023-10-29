@@ -62,10 +62,23 @@ const remove = async (req, res, next) => {
   }
 };
 
+const getBySearch = async (req, res, next) => {
+  try {
+    const { q: searchTerm } = req.query;
+
+    const { status, data } = await postService.getBySearch(searchTerm);
+
+    return res.status(status).json(data);
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   remove,
+  getBySearch,
 };

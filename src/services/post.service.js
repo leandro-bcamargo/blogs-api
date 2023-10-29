@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models');
 const CustomError = require('../utils/customError');
 const canModifyPost = require('../validations/canModifyPost');
@@ -73,10 +74,32 @@ const remove = async (postId, reqId) => {
   return { status: 204 };
 };
 
+const getBySearch = async (searchTerm) => {
+  const posts = await BlogPost.findAll({
+    where: {
+    [Op.or]: [
+      { title: {
+        [Op.like]: `%${searchTerm}%`,
+      } },
+      { content: {
+        [Op.like]: `%${searchTerm}%`,
+      } },
+    ],
+    },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+
+  return { status: 200, data: posts };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   remove,
+  getBySearch,
 };
