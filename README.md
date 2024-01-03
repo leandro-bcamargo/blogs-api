@@ -1,7 +1,9 @@
 # PROJETO BLOGS-API
 
-Este projeto é uma API e um banco de dados para a produção de conteúdo para um blog.
+Este projeto é uma API e um banco de dados para a produção de conteúdo para um blog. Trata-se de um dos projetos do módulo de back-end do curso de formação em desenvolvimento web full-stack da Trybe.
+
 A aplicação foi desenvolvida em Node.js, utilizando o ORM Sequelize para fazer um CRUD de posts seguindo os princípios do REST.
+
 Para que seja feito um post, é necessário que o usuário tenha feito login, que é autenticado via JWT Token.
 
 ## Como executar a aplicação usando Docker
