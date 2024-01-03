@@ -13,6 +13,7 @@ Basta rodar os seguintes comandos:
 - `docker-compose up -d --build` Para subir os containers de Node (blogs_api) e do banco de dados (blogs_api_db).
 - `docker exec -it blogs_api bash` Para ter acesso ao terminal interativo do container do Node criado no passo anterior.
 - `npm install` Para instalar as dependências do package.json no container do Node.
+- `npm start` Para rodar a aplicação.
 
 ## Diagrama de Entidade-Relacionamento (fornecido pela Trybe)
 
@@ -39,6 +40,7 @@ Se o login for bem-sucedido, é retornado um token JWT no seguinte formato:
 }
 ```
 
+
 ### POST /user
 
 Insere um novo usuário no banco de dados. O corpo da requisição deve ter o seguinte formato:
@@ -53,13 +55,16 @@ Insere um novo usuário no banco de dados. O corpo da requisição deve ter o se
 }
 ```
 
+
 ### GET /user
 
 Recupera todos os usuários do banco de dados. Autenticação necessária.
 
+
 ### GET /user/:id
 
-Recupera o usuário de id especificado do banco de dados. Autenticação necessária.
+Recupera o usuário de `id` especificado pelo route parameter `id` do banco de dados. Autenticação necessária.
+
 
 ### POST /categories
 
@@ -71,9 +76,11 @@ Adiciona uma nova categoria ao banco de dados. Autenticação necessária. O cor
 }
 ```
 
+
 ### GET /categories
 
 Recupera todas as categorias do banco de dados. É necessário estar autenticado para fazê-lo.
+
 
 ### POST /post
 
@@ -87,17 +94,20 @@ Adicona um novo blog post e vincula-o às categorias contidas em seu corpo. Aute
 }
 ```
 
+
 ### GET /post
 
 Recupera todos os blog posts, indicando os usuários e as categorias às quais eles pertencem. É necessário estar autenticado para fazê-lo.
 
+
 ### GET /post/:id
 
-Recupera a blog post com o id indicado, bem como o usuário e as categorias às quais ele pertence. É necessário estar autenticado para fazê-lo.
+Recupera a blog post com o `id` especificado pelo route parameter `id`, bem como o usuário e as categorias às quais ele pertence. É necessário estar autenticado para fazê-lo.
+
 
 ### PUT /post/:id
 
-Altera um blog post no banco de dados. É necessário estar autenticado para fazê-lo.
+Altera o blog post com `id` especificado pelo route parameter `id` no banco de dados. É necessário estar autenticado para fazê-lo.
 Só é possível alterá-lo se o usuário autenticado for o autor do post. Somente os atributos `title` e `content` podem ser alterados. O corpo da requisição deve ter o seguinte formato:
 
 ```json
@@ -107,9 +117,10 @@ Só é possível alterá-lo se o usuário autenticado for o autor do post. Somen
 }
 ```
 
+
 ### DELETE /post/:id
 
-Remove o blog post com o id especificado. É necessário estar autenticado para fazê-lo.
+Remove o blog post com o `id` especificado pelo route parameter `id`. É necessário estar autenticado para fazê-lo.
 Só é possível removê-lo se o usuário autenticado for o autor do post.
 
 ### DELETE /user/me
